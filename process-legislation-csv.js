@@ -1,19 +1,29 @@
 setDate();
 
 document.getElementById('datePicker').onblur = function() {
+    if (getInputtedDate().getTime() == globalState.minimumDate.getTime()) {
+        return;
+    }
     setDate();
     calculateAndDisplayScores();
 };
 
 document.getElementById('datePicker').onkeydown = function(key) {
     if (key.key == "Enter") {
+        if (getInputtedDate().getTime() == globalState.minimumDate.getTime()) {
+            return;
+        }
         setDate();
         calculateAndDisplayScores();
     }
 };
 
 function setDate() {
-    globalState.minimumDate = new Date(Date.parse(document.getElementById('datePicker').value));
+    globalState.minimumDate = getInputtedDate();
+}
+
+function getInputtedDate() {
+    return new Date(Date.parse(document.getElementById('datePicker').value));
 }
 
 document.getElementById('legislativeCsv').onchange = function() {
@@ -240,7 +250,7 @@ function getBillTotalCosponsorCount(bill) {
 }
 
 function isBillInDateRange(bill) {
-    return bill.latestActionDate >= globalState.minimumDate;
+    return bill.latestActionDate.getTime() >= globalState.minimumDate.getTime();
 }
 
 function compareMembers(member1, member2) {
