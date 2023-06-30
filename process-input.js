@@ -1,3 +1,5 @@
+// TODO: use the min date
+
 const globalState = {
     bills: new Map(),
     members: new Map(),
@@ -27,6 +29,16 @@ const totalLength = "totalLength";
 
 const defaultSponsorScore = 1;
 const defaultCosponsorScore = 1;
+
+setDate();
+
+document.getElementById('datePicker').onchange = function() {
+    setDate();
+};
+
+function setDate() {
+    globalState.minimumDate = new Date(Date.parse(document.getElementById('datePicker').value));
+}
 
 document.getElementById('legislativeCsv').onchange = function() {
     clearErrorMessages();

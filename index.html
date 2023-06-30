@@ -2,12 +2,16 @@
 <html>
    <head>
       <title>Fantasy Congress</title>
+      <link rel="stylesheet" href="style.css">
    </head>
    <body>
       <div class="row">
          <div class="column">
+            <details>
+               <summary>instructions</summary>
+            </details>
             <p>Select minimum &quot;Latest Action Date&quot; for import</p>
-            <input type="date" value="2023-06-01">
+            <input type="date" value="2023-06-01" id="datePicker">
             <br/>
             <br/>
             <p>select legislative csv file</p>
@@ -19,7 +23,26 @@
             <textarea readonly id="billsText"></textarea>
          </div>
 
-         <div class="column"></div>
+         <div class="column">
+            <p>Teams</p>
+            <br/>
+            <br/>
+            <p>Load teams</p>
+            <input type="file" accept=".json" id="loadTeamsButton">
+            <input type="button" id="saveTeamsButton" value="Save teams">
+            <br/>
+            <br/>
+            <input type="checkbox" id="editViewCheckbox">
+            <label for="editViewCheckbox">Edit view</label>
+            <input type="checkbox" id="scoreMappingsCheckbox">
+            <label for="scoreMappingsCheckbox">Show score mappings</label>
+            <input type="checkbox" id="verboseInfoTeamCheckbox">
+            <label for="verboseInfoTeamCheckbox">Show verbose team info</label>
+            <br/>
+            <br/>
+            <textarea readonly id="simpleTeamInfo"></textarea>
+            <textarea readonly id="verboseTeamInfo"></textarea>
+         </div>
        </div>
    </body>
 </html>
