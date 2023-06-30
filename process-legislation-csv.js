@@ -1,9 +1,15 @@
-// TODO: use the min date
-
 setDate();
 
-document.getElementById('datePicker').onchange = function() {
+document.getElementById('datePicker').onblur = function() {
     setDate();
+    calculateAndDisplayScores();
+};
+
+document.getElementById('datePicker').onkeydown = function(key) {
+    if (key.key == "Enter") {
+        setDate();
+        calculateAndDisplayScores();
+    }
 };
 
 function setDate() {
@@ -32,8 +38,7 @@ function processFile(fileText) {
     }
 
     readRows(fileLines, headerIndex, indices);
-    calculateScores();
-    displayScores();
+    calculateAndDisplayScores();
 }
 
 function getHeaderIndex(fileLines) {
@@ -157,14 +162,24 @@ function addMemberToGlobalStateIfNew(memberName) {
     }
 }
 
+function calculateAndDisplayScores() {
+    calculateScores();
+    displayScores();
+}
+
 function calculateScores() {
     for ([_, bill] of globalState.bills) {
-        bill.sponsorScore = defaultSponsorScore;
-        bill.cosponsorScore = defaultCosponsorScore;
-        for ([phrase, mapping] of globalState.scoreMappings) {
-            if (bill.titleLowerCase.includes(phrase)) {
-                bill.sponsorScore += mapping.sponsorScore;
-                bill.cosponsorScore += mapping.cosponsorScore;
+        if (!isBillInDateRange(bill)) {
+            bill.sponsorScore = 0;
+            bill.cosponsorScore = 0;
+        } else {
+            bill.sponsorScore = defaultSponsorScore;
+            bill.cosponsorScore = defaultCosponsorScore;
+            for ([phrase, mapping] of globalState.scoreMappings) {
+                if (bill.titleLowerCase.includes(phrase)) {
+                    bill.sponsorScore += mapping.sponsorScore;
+                    bill.cosponsorScore += mapping.cosponsorScore;
+                }
             }
         }
     }
@@ -172,12 +187,15 @@ function calculateScores() {
     for ([_, member] of globalState.members) {
         member.sponsorScore = 0
         member.cosponsorScore = 0
-        member.sponsoredLegislationNumbers
         member.sponsoredLegislationNumbers.forEach((legislationNumber) => {
-            member.sponsorScore += globalState.bills.get(legislationNumber).sponsorScore;
+            if (isBillInDateRange(globalState.bills.get(legislationNumber))) {
+                member.sponsorScore += globalState.bills.get(legislationNumber).sponsorScore;
+            }
         });
         member.cosponsoredLegislationNumbers.forEach((legislationNumber) => {
-            member.cosponsorScore += globalState.bills.get(legislationNumber).cosponsorScore;
+            if (isBillInDateRange(globalState.bills.get(legislationNumber))) {
+                member.cosponsorScore += globalState.bills.get(legislationNumber).cosponsorScore;
+            }
         });
     }
 }
@@ -197,8 +215,10 @@ function displayScores() {
     var billsTextArea = document.getElementById("billsText");
     billsTextArea.value = "";
     bills.forEach((bill) => {
-        billsTextArea.value += bill.legislationNumber + ": Sponsor party: " + bill.sponsorParty 
-             + getBillCosponsorsByPartyString(bill) + "\n";
+        if (isBillInDateRange(bill)) {
+            billsTextArea.value += bill.legislationNumber + ": Sponsor party: " + bill.sponsorParty 
+                + getBillCosponsorsByPartyString(bill) + "\n";
+        }
     });
 }
 
@@ -217,6 +237,10 @@ function getBillTotalCosponsorCount(bill) {
         count += cosponsorList.length;
     }
     return count;
+}
+
+function isBillInDateRange(bill) {
+    return bill.latestActionDate >= globalState.minimumDate;
 }
 
 function compareMembers(member1, member2) {
