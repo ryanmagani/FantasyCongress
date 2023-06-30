@@ -4,6 +4,21 @@
       <title>Fantasy Congress</title>
    </head>
    <body>
-      <h1>Fantasy Congress</h1>
+      <div class="row">
+         <div class="column">
+            <p>Select minimum &quot;Latest Action Date&quot; for import</p>
+            <input type="date" value="2023-06-01">
+            <br/>
+            <br/>
+            <p>select legislative csv file</p>
+            <input type="file" accept=".csv" id="legislativeCsv">
+            <br/>
+            <br/>
+            <ul id="errorMessages"></ul>
+         </div>
+
+         <div class="column"></div>
+       </div>
    </body>
 </html>
+<script src="process-input.js"></script>
