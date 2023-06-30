@@ -51,7 +51,7 @@ function processFile(fileText) {
 
     readRows(fileLines, headerIndex, indices);
     calculateScores();
-    console.log(globalState);
+    displayScores();
 }
 
 function getHeaderIndex(fileLines) {
@@ -140,10 +140,10 @@ function readRow(line, currentIndex, indices) {
         var cosponsor = columns[currentCosponsorIndex]
         var cosponsorParty = getSponsorParty(cosponsor);
 
-        if (bill.cosponsorsByParty[cosponsorParty] == null) {
-            bill.cosponsorsByParty[cosponsorParty] = [];
+        if (bill.cosponsorsByParty.get(cosponsorParty) == null) {
+            bill.cosponsorsByParty.set(cosponsorParty, []);
         }
-        bill.cosponsorsByParty[cosponsorParty].push(cosponsor);
+        bill.cosponsorsByParty.get(cosponsorParty).push(cosponsor);
 
         currentCosponsorIndex++;
     }
@@ -158,7 +158,7 @@ function readRow(line, currentIndex, indices) {
     globalState.members.get(sponsor).sponsoredLegislationNumbers.add(bill.legislationNumber);
 
     for (party in bill.cosponsorsByParty) {
-        for (cosponsorIndex in bill.cosponsorsByParty[party]) {
+        for (cosponsorIndex in bill.cosponsorsByParty.get(party)) {
             addMemberToGlobalStateIfNew(cosponsor);
             globalState.members.get(cosponsor).cosponsoredLegislationNumbers.add(bill.legislationNumber);
         }
@@ -200,6 +200,51 @@ function calculateScores() {
     }
 }
 
+function displayScores() {
+    var members = Array.from(globalState.members.values());
+    members.sort(compareMembers);
+    var membersTextArea = document.getElementById("memberesText");
+    membersTextArea.value = "";
+    members.forEach((member) => {
+        var score = member.sponsorScore + member.cosponsorScore;
+        membersTextArea.value += member.name + " scored " + score + "\n";
+    });
+
+    var bills = Array.from(globalState.bills.values());
+    bills.sort(compareBills);
+    var billsTextArea = document.getElementById("billsText");
+    billsTextArea.value = "";
+    bills.forEach((bill) => {
+        billsTextArea.value += bill.legislationNumber + ": Sponsor party: " + bill.sponsorParty 
+             + getBillCosponsorsByPartyString(bill) + "\n";
+    });
+}
+
+function getBillCosponsorsByPartyString(bill) {
+    var resultArray = [];
+    for ([party, cosponsorList] of bill.cosponsorsByParty) {
+        resultArray.push(", Cosponsor party: " + party + " count: " + cosponsorList.length);
+    }
+    // Sort to ensure that the party list is always in the same order.
+    return resultArray.sort().join("");
+}
+
+function getBillTotalCosponsorCount(bill) {
+    var count = 0;
+    for ([_, cosponsorList] of bill.cosponsorsByParty) {
+        count += cosponsorList.length;
+    }
+    return count;
+}
+
+function compareMembers(member1, member2) {
+    return member2.sponsorScore + member2.cosponsorScore - (member1.sponsorScore + member1.cosponsorScore);
+}
+
+function compareBills(bill1, bill2) {
+    return getBillTotalCosponsorCount(bill2) - getBillTotalCosponsorCount(bill1);
+}
+
 function clearErrorMessages() {
     var parent = document.getElementById("errorMessages");
     while (parent.firstChild != null) {
@@ -223,6 +268,8 @@ function splitColumns(line) {
 // Norton, Eleanor Holmes [Del.-D-DC-At Large]
 // and find the substring which contains party info
 function getSponsorParty(sponsor) {
+    var firstBracketIndex = sponsor.indexOf("[");
+    sponsor = sponsor.substring(firstBracketIndex);
     var firstDash = sponsor.indexOf("-");
     if (firstDash == -1) {
         return null;
