@@ -32,19 +32,37 @@
             <input type="button" id="saveTeamsButton" value="Save teams">
             <br/>
             <br/>
-            <input type="checkbox" id="editViewCheckbox">
-            <label for="editViewCheckbox">Edit view</label>
             <input type="checkbox" id="scoreMappingsCheckbox">
             <label for="scoreMappingsCheckbox">Show score mappings</label>
-            <input type="checkbox" id="verboseInfoTeamCheckbox">
-            <label for="verboseInfoTeamCheckbox">Show verbose team info</label>
             <br/>
             <br/>
-            <textarea readonly id="simpleTeamInfo"></textarea>
-            <textarea readonly id="verboseTeamInfo"></textarea>
+            <details>
+               <summary>Edit teams</summary>
+               <input type="text" id="addTeamName" placeholder="Team name">
+               <input type="button" id="addTeamButton" value="Add team">
+               <p id="teamNameErrorMessage"></p>
+               <br/>
+               <details open>
+                  <summary>Existing teams</summary>
+                  <div id="editExistingTeamsDiv">
+
+                  </div>
+               </details>
+            </details>
+            <br/>
+            <br/>
+            <details open>
+               <summary>Team scores</summary>
+               <textarea readonly id="simpleTeamInfo"></textarea>
+            </details>
+            <details>
+               <summary>Verbose team scores</summary>
+               <textarea readonly id="verboseTeamInfo"></textarea>
+            </details>
          </div>
        </div>
    </body>
 </html>
 <script src="globals.js"></script>
 <script src="process-legislation-csv.js"></script>
+<script src="edit-teams.js"></script>

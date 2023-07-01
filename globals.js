@@ -2,6 +2,7 @@ const globalState = {
     bills: new Map(),
     members: new Map(),
     scoreMappings: new Map(),
+    teams: new Map(),
     // ex: globalState.scoreMappings.set("school", {sponsorScore: 1000, cosponsorScore: 999});
 }
 

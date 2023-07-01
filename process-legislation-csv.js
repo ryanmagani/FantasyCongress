@@ -263,9 +263,7 @@ function compareBills(bill1, bill2) {
 
 function clearErrorMessages() {
     var parent = document.getElementById("errorMessages");
-    while (parent.firstChild != null) {
-        parent.removeChild(parent.firstChild);
-    }
+    removeAllChildren(parent);
 }
 
 function appendErrorMessage(message) {
@@ -292,4 +290,10 @@ function getSponsorParty(sponsor) {
     }
 
     return sponsor.charAt(firstDash + 1);
+}
+
+function removeAllChildren(parent) {
+    while (parent.firstChild != null) {
+        parent.removeChild(parent.firstChild);
+    }
 }
