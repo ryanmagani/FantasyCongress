@@ -146,8 +146,8 @@ function readRow(line, currentIndex, indices) {
     }
 
     if (globalState.bills.get(bill.legislationNumber) == null
-        // If the bill already exists, pick whichever has the newest latestActionDate.
-        || globalState.bills.get(bill.legislationNumber).latestActionDate < bill.latestActionDate) {
+        // If the bill already exists, pick whichever has the newest introductionDate.
+        || globalState.bills.get(bill.legislationNumber).introductionDate < bill.introductionDate) {
         globalState.bills.set(bill.legislationNumber, bill);
     }
 
@@ -250,7 +250,7 @@ function getBillTotalCosponsorCount(bill) {
 }
 
 function isBillInDateRange(bill) {
-    return bill.latestActionDate.getTime() >= globalState.minimumDate.getTime();
+    return bill.introductionDate.getTime() >= globalState.minimumDate.getTime();
 }
 
 function compareMembers(member1, member2) {
