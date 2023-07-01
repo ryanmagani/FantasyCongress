@@ -48,6 +48,7 @@ function processFile(fileText) {
     }
 
     readRows(fileLines, headerIndex, indices);
+    setMembersDataList();
     calculateAndDisplayScores();
 }
 
@@ -169,6 +170,16 @@ function addMemberToGlobalStateIfNew(memberName) {
         newMember.sponsoredLegislationNumbers = new Set();
         newMember.cosponsoredLegislationNumbers = new Set();
         globalState.members.set(memberName, newMember);
+    }
+}
+
+function setMembersDataList() {
+    var allMemberDataList = document.getElementById('allMemberDataList');
+    for ([member, _] of globalState.members) {
+        console.log(member);
+        var option = document.createElement('option');
+        option.value = member;
+        allMemberDataList.appendChild(option);
     }
 }
 
