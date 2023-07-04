@@ -128,6 +128,10 @@ function readRow(line, currentIndex, indices) {
     bill.introductionDate = new Date(Date.parse(columns[indices[introductionDateColumnName]]));
 
     var sponsor = columns[indices[sponsorColumnName]];
+    if (sponsor == "") {
+        console.log("Empty string sponsor on line: " + line);
+        return;
+    }
     bill.sponsor = sponsor;
     bill.sponsorParty = getSponsorParty(sponsor);
 
@@ -135,7 +139,10 @@ function readRow(line, currentIndex, indices) {
     var currentCosponsorIndex = indices[cosponsorColumnName].first
     var lastCosponsorIndex = indices[cosponsorColumnName].last
     while (currentCosponsorIndex <= lastCosponsorIndex && columns[currentCosponsorIndex] != "") {
-        var cosponsor = columns[currentCosponsorIndex]
+        var cosponsor = columns[currentCosponsorIndex];
+        if (cosponsor == "") {
+            console.log("Empty string cosponsor on line: " + line);
+        }
         var cosponsorParty = getSponsorParty(cosponsor);
 
         if (bill.cosponsorsByParty.get(cosponsorParty) == null) {
@@ -176,7 +183,6 @@ function addMemberToGlobalStateIfNew(memberName) {
 function setMembersDataList() {
     var allMemberDataList = document.getElementById('allMemberDataList');
     for ([member, _] of globalState.members) {
-        console.log(member);
         var option = document.createElement('option');
         option.value = member;
         allMemberDataList.appendChild(option);
