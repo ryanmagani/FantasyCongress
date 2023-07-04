@@ -72,6 +72,7 @@ function displayTeams() {
         }
         teamDiv.appendChild(addMemberButton);
 
+        // todo: improve team display, and add non-edit team display
         teamMembers.forEach(teamMember => {
             teamDiv.appendChild(document.createElement('br'));
             

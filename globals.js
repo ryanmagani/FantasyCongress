@@ -1,9 +1,9 @@
 const globalState = {
     bills: new Map(),
     members: new Map(),
-    scoreMappings: new Map(),
+    // ex: globalState.scoreMappings.push({phrase: "school", sponsorScore: 1000, cosponsorScore: 999});
+    scoreMappings: [],
     teams: new Map(),
-    // ex: globalState.scoreMappings.set("school", {sponsorScore: 1000, cosponsorScore: 999});
 }
 
 const latestActionColumnName = "\"Latest Action\"";

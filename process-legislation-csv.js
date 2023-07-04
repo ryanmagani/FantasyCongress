@@ -202,12 +202,12 @@ function calculateScores() {
         } else {
             bill.sponsorScore = defaultSponsorScore;
             bill.cosponsorScore = defaultCosponsorScore;
-            for ([phrase, mapping] of globalState.scoreMappings) {
-                if (bill.titleLowerCase.includes(phrase)) {
+            globalState.scoreMappings.forEach((mapping) => {
+                if (bill.titleLowerCase.includes(mapping.phrase)) {
                     bill.sponsorScore += mapping.sponsorScore;
                     bill.cosponsorScore += mapping.cosponsorScore;
                 }
-            }
+            });
         }
     }
 
@@ -307,10 +307,4 @@ function getSponsorParty(sponsor) {
     }
 
     return sponsor.charAt(firstDash + 1);
-}
-
-function removeAllChildren(parent) {
-    while (parent.firstChild != null) {
-        parent.removeChild(parent.firstChild);
-    }
 }
