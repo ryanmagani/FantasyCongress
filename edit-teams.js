@@ -39,7 +39,7 @@ function displayTeams() {
     var verboseTextArea = document.getElementById('verboseTeamInfo');
     verboseTextArea.value = "";
 
-    for ([teamName, teamMembers] of globalState.teams) {
+    for (let [teamName, teamMembers] of globalState.teams) {
         var teamDiv = document.createElement('div');
         editParent.appendChild(teamDiv)
         
@@ -60,7 +60,7 @@ function displayTeams() {
 
         teamDiv.appendChild(document.createElement('br'));
 
-        var allMemberInput = document.createElement('input');
+        let allMemberInput = document.createElement('input');
         allMemberInput.placeholder = "add member";
         allMemberInput.setAttribute("list", "allMemberDataList");
         allMemberInput.onkeydown = function(key) {
@@ -71,7 +71,7 @@ function displayTeams() {
         }
         teamDiv.appendChild(allMemberInput);
 
-        var addMemberButton = document.createElement('input');
+        let addMemberButton = document.createElement('input');
         addMemberButton.type = "button";
         addMemberButton.className = "addMemberButton";
         addMemberButton.value = "Add member";
@@ -128,7 +128,6 @@ function displayTeams() {
         simpleTextArea.value += "Team name: " + teamName + ", score: " + teamScore + "\n" + simpleMemberText + "\n";
         verboseTextArea.value += "Team name: " + teamName + ", score: " + teamScore + "\n" + verboseMemberText + "\n";
     }
-    console.log("a");
 }
 
 function removeTeam(teamName) {
