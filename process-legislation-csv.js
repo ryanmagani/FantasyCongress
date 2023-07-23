@@ -162,8 +162,8 @@ function readRow(line, currentIndex, indices) {
     addMemberToGlobalStateIfNew(sponsor);
     globalState.members.get(sponsor).sponsoredLegislationNumbers.add(bill.legislationNumber);
 
-    for (party in bill.cosponsorsByParty) {
-        for (cosponsorIndex in bill.cosponsorsByParty.get(party)) {
+    for ([party, members] of bill.cosponsorsByParty) {
+        for (member in members) {
             addMemberToGlobalStateIfNew(cosponsor);
             globalState.members.get(cosponsor).cosponsoredLegislationNumbers.add(bill.legislationNumber);
         }
