@@ -13,10 +13,12 @@ function createTeam() {
     var teamName = document.getElementById('addTeamName').value;
     if (teamName == "") {
         setTeamNameErrorMessage("Please enter a non-empty team name");
+        return;
     }
 
     if (globalState.teams.has(teamName)) {
         setTeamNameErrorMessage("Team already exists");
+        return;
     } else {
         globalState.teams.set(teamName, []);
     }
@@ -28,12 +30,18 @@ function setTeamNameErrorMessage(message) {
 }
 
 function displayTeams() {
-    var parent = document.getElementById('editExistingTeamsDiv');
-    removeAllChildren(parent);
+    var editParent = document.getElementById('editExistingTeamsDiv');
+    removeAllChildren(editParent);
+
+    var simpleTextArea = document.getElementById('simpleTeamInfo');
+    simpleTextArea.value = "";
+
+    var verboseTextArea = document.getElementById('verboseTeamInfo');
+    verboseTextArea.value = "";
 
     for ([teamName, teamMembers] of globalState.teams) {
         var teamDiv = document.createElement('div');
-        parent.appendChild(teamDiv)
+        editParent.appendChild(teamDiv)
         
         var nameEdit = document.createElement('input');
         nameEdit.type = "text";
@@ -72,7 +80,11 @@ function displayTeams() {
         }
         teamDiv.appendChild(addMemberButton);
 
-        // todo: improve team display, and add non-edit team display
+        var teamScore = 0;
+
+        var simpleMemberText = "";
+        var verboseMemberText = "";
+
         teamMembers.forEach(teamMember => {
             teamDiv.appendChild(document.createElement('br'));
             
@@ -88,8 +100,35 @@ function displayTeams() {
                 removeTeamMember(teamName, teamMember);
             }
             teamDiv.appendChild(removeTeamMemberButton);
+
+            var memberScore = globalState.members.get(teamMember).sponsorScore + globalState.members.get(teamMember).cosponsorScore;
+            teamScore += memberScore;
+
+            simpleMemberText += teamMember + " scored: " + memberScore + "\n";
+
+            verboseMemberText += teamMember + " scored: " + memberScore + "\n";
+
+            var sponsoredBillNumbers = globalState.members.get(teamMember).sponsoredLegislationNumbers;
+            if (sponsoredBillNumbers.size > 0) {
+                verboseMemberText += "==Sponsored " + sponsoredBillNumbers.size + " bill==\n";
+                for (billNumber of sponsoredBillNumbers) {
+                    verboseMemberText += globalState.bills.get(billNumber).title + "\n";
+                }
+            }
+
+            var cosponsoredBillNumbers = globalState.members.get(teamMember).cosponsoredLegislationNumbers;
+            if (cosponsoredBillNumbers.size > 0) {
+                verboseMemberText += "==Cosponsored " + cosponsoredBillNumbers.size + " bills==\n";
+                for (billNumber of cosponsoredBillNumbers) {
+                    verboseMemberText += globalState.bills.get(billNumber).title + "\n";
+                }
+            }
         });
+
+        simpleTextArea.value += "Team name: " + teamName + ", score: " + teamScore + "\n" + simpleMemberText + "\n";
+        verboseTextArea.value += "Team name: " + teamName + ", score: " + teamScore + "\n" + verboseMemberText + "\n";
     }
+    console.log("a");
 }
 
 function removeTeam(teamName) {
