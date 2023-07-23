@@ -22,9 +22,9 @@ function displayScoreMappings() {
         phraseEdit.value = mapping.phrase;
         phraseEdit.placeholder = "case insensitive phrase";
         // todo: figure out if this can be updated with blur without throwing
-        // phraseEdit.onblur = function() {
-        //     updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
-        // }
+        phraseEdit.onblur = function() {
+            updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
+        }
         phraseEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
                 updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
@@ -36,9 +36,10 @@ function displayScoreMappings() {
         sponsorScoreEdit.className = "sponsorScoreEditor";
         sponsorScoreEdit.value = mapping.sponsorScore;
         sponsorScoreEdit.placeholder = "positive number";
-        // sponsorScoreEdit.onblur = function() {
-        //     updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
-        // }
+        // todo: figure out if this can be updated with blur without throwing
+        sponsorScoreEdit.onblur = function() {
+            updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
+        }
         sponsorScoreEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
                 updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
@@ -50,9 +51,10 @@ function displayScoreMappings() {
         cosponsorScoreEdit.className = "cosponsorScoreEditor";
         cosponsorScoreEdit.value = mapping.cosponsorScore;
         cosponsorScoreEdit.placeholder = "positive number";
-        // cosponsorScoreEdit.onblur = function() {
-        //     updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
-        // }
+        // todo: figure out if this can be updated with blur without throwing
+        cosponsorScoreEdit.onblur = function() {
+            updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
+        }
         cosponsorScoreEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
                 updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
@@ -68,4 +70,5 @@ function updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit
     mapping.cosponsorScore = parseInt(cosponsorScoreEdit.value);
     displayScoreMappings();
     calculateAndDisplayScores();
+    displayTeams();
 }
