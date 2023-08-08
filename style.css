@@ -1,4 +1,10 @@
 .column {
     float: left;
-    width: 30%;
+    max-width: 100%;
+    width: auto\9;
+    margin-right: 2%;
+}
+
+img {
+    display: block;
 }
