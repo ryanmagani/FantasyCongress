@@ -9,17 +9,12 @@ html, body, .row {
     float: left;
     margin-bottom: 1%;
     padding: 1%;
-    border-style: solid;
 }
 
-#legislationColumn {
+#legislationColumn, #teamColumn {
     width: 40%;
-    margin-right: 1%;
-}
-
-#teamColumn {
-    width: 40%;
-    margin-right: 1%;
+    padding-right: 2%;
+    border-right-style: solid;
 }
 
 #scoreMappingColumn {
