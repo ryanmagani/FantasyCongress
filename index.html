@@ -7,9 +7,10 @@
    <body>
       <datalist id="allMemberDataList"></datalist>
       <div class="row">
-         <div class="column">
+         <div class="column" id="legislationColumn">
+            <h1>Legislation upload</h1>
             <details>
-               <summary>instructions</summary>
+               <summary>Instructions</summary>
                <ol>
                   <li>Navigate to <a href="https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22congress%22%3A118%7D">congress.gov's legislation search</a></li>
                   <li>In the sidebar, ensure that the desired congress is selected <img src="screenshots/congress-filter.png"></li>
@@ -21,32 +22,23 @@
             </details>
             <p>Select minimum &quot;Introduction Date&quot; for import</p>
             <input type="date" value="2020-01-01" id="datePicker">
-            <br/>
-            <br/>
-            <p>select legislative csv file</p>
+            <p>Select legislative csv file</p>
             <input type="file" accept=".csv" id="legislativeCsv">
-            <br/>
-            <br/>
             <ul id="errorMessages"></ul>
             <textarea readonly id="memberesText"></textarea>
             <textarea readonly id="billsText"></textarea>
          </div>
 
-         <div class="column">
-            <p>Teams</p>
-            <br/>
-            <br/>
+         <div class="column" id="teamColumn">
+            <h1>Teams</h1>
             <p>Load teams</p>
             <input type="file" accept=".json" id="loadTeamsButton">
             <input type="button" id="saveTeamsButton" value="Save teams">
-            <br/>
-            <br/>
-            <details>
+            <details id="editTeamsDetails">
                <summary>Edit teams</summary>
                <input type="text" id="addTeamName" placeholder="Team name">
                <input type="button" id="addTeamButton" value="Add team">
                <p id="teamNameErrorMessage"></p>
-               <br/>
                <details open>
                   <summary>Existing teams</summary>
                   <div id="editExistingTeamsDiv">
@@ -54,8 +46,6 @@
                   </div>
                </details>
             </details>
-            <br/>
-            <br/>
             <details id="simpleTeamInfoDetails" open>
                <summary>Team scores</summary>
                <textarea id="simpleTeamInfo" readonly></textarea>
@@ -66,11 +56,9 @@
             </details>
          </div>
 
-         <div class="row">
-            <p>Score mappings</p>
+         <div class="column" id="scoreMappingColumn">
+            <h1>Score mappings</h1>
             <input type="button" id="addScoreMapping" value="Add mapping">
-            <br/>
-            <br/>
             <div id="scoreMappings"></div>
          </div>
        </div>

@@ -41,6 +41,7 @@ function displayTeams() {
 
     for (let [teamName, teamMembers] of globalState.teams) {
         var teamDiv = document.createElement('div');
+        teamDiv.className = "teamDiv";
         editParent.appendChild(teamDiv)
         
         var nameEdit = document.createElement('input');
@@ -57,8 +58,6 @@ function displayTeams() {
             removeTeam(teamName);
         }
         teamDiv.appendChild(removeTeamButton);
-
-        teamDiv.appendChild(document.createElement('br'));
 
         let allMemberInput = document.createElement('input');
         allMemberInput.placeholder = "add member";
@@ -85,9 +84,7 @@ function displayTeams() {
         var simpleMemberText = "";
         var verboseMemberText = "";
 
-        teamMembers.forEach(teamMember => {
-            teamDiv.appendChild(document.createElement('br'));
-            
+        teamMembers.forEach(teamMember => {            
             var teamMemberParagraph = document.createElement('p');
             teamMemberParagraph.innerText = teamMember;
             teamDiv.appendChild(teamMemberParagraph);
