@@ -3,7 +3,6 @@ document.getElementById('addScoreMapping').onclick = function(key) {
 };
 
 document.getElementById('updateScoreMappings').onclick = function(key) {
-    console.log("show");
     updateMappingsAndDisplay();
 };
 
