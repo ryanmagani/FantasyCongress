@@ -3,6 +3,7 @@ document.getElementById('addScoreMapping').onclick = function(key) {
 };
 
 document.getElementById('updateScoreMappings').onclick = function(key) {
+    console.log("show");
     updateMappingsAndDisplay();
 };
 
@@ -35,6 +36,7 @@ function displayScoreMappings() {
         phraseEdit.placeholder = "case insensitive phrase";
         phraseEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
+                showSpinner();
                 updateMappingsAndDisplay();
             }
         }
@@ -45,6 +47,7 @@ function displayScoreMappings() {
         sponsorScoreEdit.placeholder = "positive number";
         sponsorScoreEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
+                showSpinner();
                 updateMappingsAndDisplay();
             }
         }
@@ -55,6 +58,7 @@ function displayScoreMappings() {
         cosponsorScoreEdit.placeholder = "positive number";
         cosponsorScoreEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
+                showSpinner();
                 updateMappingsAndDisplay();
             }
         }

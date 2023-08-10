@@ -31,8 +31,10 @@ document.getElementById('legislativeCsv').onchange = function() {
     var fileReader = new FileReader()
     fileReader.onload = function() {
         processFile(this.result);
+        hideSpinner();
     };
     fileReader.readAsText(this.files[0]);
+    showSpinner();
 };
 
 function processFile(fileText) {

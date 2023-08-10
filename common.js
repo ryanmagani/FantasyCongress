@@ -3,3 +3,11 @@ function removeAllChildren(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
+
+function showSpinner() {
+    document.getElementById("loading-container").style.visibility = "visible";
+}
+
+function hideSpinner() {
+    document.getElementById("loading-container").style.visibility = "hidden";
+}
