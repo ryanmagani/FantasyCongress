@@ -36,7 +36,6 @@ function displayScoreMappings() {
         phraseEdit.placeholder = "case insensitive phrase";
         phraseEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
-                showSpinner();
                 updateMappingsAndDisplay();
             }
         }
@@ -47,7 +46,6 @@ function displayScoreMappings() {
         sponsorScoreEdit.placeholder = "positive number";
         sponsorScoreEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
-                showSpinner();
                 updateMappingsAndDisplay();
             }
         }
@@ -87,8 +85,12 @@ function updateMappings() {
 }
 
 function updateMappingsAndDisplay() {
-    updateMappings();
-    displayScoreMappings();
-    calculateAndDisplayScores();
-    displayTeams();
+    showSpinner();
+    setTimeout(() => {
+        updateMappings();
+        displayScoreMappings();
+        calculateAndDisplayScores();
+        displayTeams();
+        hideSpinner();
+    }, 0);
 }

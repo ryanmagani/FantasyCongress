@@ -2,8 +2,10 @@ document.getElementById('loadTeamsButton').onchange = function() {
     var fileReader = new FileReader();
     fileReader.onload = function() {
         processTeamsFile(this.result);
+        hideSpinner();
     };
     fileReader.readAsText(this.files[0]);
+    showSpinner();
 };
 
 
