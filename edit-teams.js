@@ -60,6 +60,7 @@ function displayTeams() {
         teamDiv.appendChild(removeTeamButton);
 
         let allMemberInput = document.createElement('input');
+        allMemberInput.className = "allMemberInput";
         allMemberInput.placeholder = "add member";
         allMemberInput.setAttribute("list", "allMemberDataList");
         allMemberInput.onkeydown = function(key) {
@@ -146,6 +147,15 @@ function addTeamMember(teamName, allMemberInput) {
         existingTeamMembers.sort();
         allMemberInput.value = null;
         displayTeams();
+
+        // Refocus input after displaying teams, because the previous element will have been destroyed and replaced.
+        // Note: this is based on team name, and won't work if the team name has been edited but not persisted.
+        var teamDivs = document.getElementsByClassName("teamDiv");
+        for (let teamDiv of teamDivs) {
+            if (teamDiv.getElementsByClassName("existingTeamNameEditor")[0].value == teamName) {
+                teamDiv.getElementsByClassName("allMemberInput")[0].focus();
+            }
+        }
     }
 }
 
