@@ -4,6 +4,7 @@ const globalState = {
     // ex: globalState.scoreMappings.push({phrase: "school", sponsorScore: 1000, cosponsorScore: 999});
     scoreMappings: [],
     teams: new Map(),
+    lastSpinnerIndex: -1,
 }
 
 const latestActionColumnName = "\"Latest Action\"";
