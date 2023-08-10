@@ -192,6 +192,7 @@ function setMembersDataList() {
 function calculateAndDisplayScores() {
     calculateScores();
     displayScores();
+    displayTeams();
 }
 
 function calculateScores() {
