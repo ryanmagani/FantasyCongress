@@ -44,10 +44,18 @@ function displayTeams() {
         teamDiv.className = "teamDiv";
         editParent.appendChild(teamDiv)
         
-        var nameEdit = document.createElement('input');
+        let nameEdit = document.createElement('input');
         nameEdit.type = "text";
         nameEdit.className = "existingTeamNameEditor";
         nameEdit.value = teamName;
+        nameEdit.onkeydown = function(key) {
+            if (key.key == "Enter") {
+                updateTeamName(teamName, nameEdit.value);
+            }
+        }
+        nameEdit.onblur = function() {
+            updateTeamName(teamName, nameEdit.value);
+        };
         teamDiv.appendChild(nameEdit);
 
         var removeTeamButton = document.createElement('input');
@@ -132,6 +140,21 @@ function displayTeams() {
         simpleTextArea.value += "Team name: " + teamName + ", score: " + teamScore + "\n" + simpleMemberText + "\n";
         verboseTextArea.value += "Team name: " + teamName + ", score: " + teamScore + "\n" + verboseMemberText + "\n";
     }
+}
+
+function updateTeamName(oldTeamName, newTeamName) {
+    var oldTeams = globalState.teams;
+    var newTeams = new Map();
+    // Do a copy to retain order of the map.
+    for (let [teamName, teamMembers] of oldTeams) {
+        var updatedName = teamName;
+        if (updatedName == oldTeamName) {
+            updatedName = newTeamName;
+        }
+        newTeams.set(updatedName, teamMembers);
+    }
+    globalState.teams = newTeams;
+    displayTeams();
 }
 
 function removeTeam(teamName) {
