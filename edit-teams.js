@@ -98,14 +98,20 @@ function displayTeams() {
             }
             teamDiv.appendChild(removeTeamMemberButton);
 
-            var memberScore = globalState.members.get(teamMember).sponsorScore + globalState.members.get(teamMember).cosponsorScore;
+            var member = globalState.members.get(teamMember)
+            // Can happen on team import without having scores loaded
+            if (member == null) {
+                return;
+            }
+
+            var memberScore = member.sponsorScore + member.cosponsorScore;
             teamScore += memberScore;
 
             simpleMemberText += teamMember + " scored: " + memberScore + "\n";
 
             verboseMemberText += teamMember + " scored: " + memberScore + "\n";
 
-            var sponsoredBillNumbers = globalState.members.get(teamMember).sponsoredLegislationNumbers;
+            var sponsoredBillNumbers = member.sponsoredLegislationNumbers;
             if (sponsoredBillNumbers.size > 0) {
                 verboseMemberText += "==Sponsored " + sponsoredBillNumbers.size + " bill==\n";
                 for (billNumber of sponsoredBillNumbers) {
@@ -113,7 +119,7 @@ function displayTeams() {
                 }
             }
 
-            var cosponsoredBillNumbers = globalState.members.get(teamMember).cosponsoredLegislationNumbers;
+            var cosponsoredBillNumbers = member.cosponsoredLegislationNumbers;
             if (cosponsoredBillNumbers.size > 0) {
                 verboseMemberText += "==Cosponsored " + cosponsoredBillNumbers.size + " bills==\n";
                 for (billNumber of cosponsoredBillNumbers) {
