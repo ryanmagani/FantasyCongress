@@ -2,10 +2,14 @@ document.getElementById('addScoreMapping').onclick = function(key) {
     createMapping();
 };
 
+document.getElementById('updateScoreMappings').onclick = function(key) {
+    updateMappingsAndDisplay();
+};
+
 function createMapping() {
     globalState.scoreMappings.push({phrase: "", sponsorScore: 1, cosponsorScore: 1});
+    updateMappings();
     displayScoreMappings();
-    calculateScores();
 }
 
 function displayScoreMappings() {
@@ -13,61 +17,73 @@ function displayScoreMappings() {
     removeAllChildren(scoreMappingsDiv);
 
     globalState.scoreMappings.forEach((mapping) => {
+        var scoreMappingContainer = document.createElement('div');
+        scoreMappingContainer.className = "scoreMappingContainer";
+        scoreMappingsDiv.appendChild(scoreMappingContainer);
+
         var phraseEdit = document.createElement('input');
         var sponsorScoreEdit = document.createElement('input');
         var cosponsorScoreEdit = document.createElement('input');
+
+        scoreMappingContainer.appendChild(phraseEdit);
+        scoreMappingContainer.appendChild(sponsorScoreEdit);
+        scoreMappingContainer.appendChild(cosponsorScoreEdit);
 
         phraseEdit.type = "text";
         phraseEdit.className = "phraseEditor";
         phraseEdit.value = mapping.phrase;
         phraseEdit.placeholder = "case insensitive phrase";
-        // todo: figure out if this can be updated with blur without throwing
-        phraseEdit.onblur = function() {
-            updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
-        }
         phraseEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
-                updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
+                updateMappingsAndDisplay();
             }
         }
-        scoreMappingsDiv.appendChild(phraseEdit);
 
         sponsorScoreEdit.type = "number";
         sponsorScoreEdit.className = "sponsorScoreEditor";
         sponsorScoreEdit.value = mapping.sponsorScore;
         sponsorScoreEdit.placeholder = "positive number";
-        // todo: figure out if this can be updated with blur without throwing
-        sponsorScoreEdit.onblur = function() {
-            updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
-        }
         sponsorScoreEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
-                updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
+                updateMappingsAndDisplay();
             }
         }
-        scoreMappingsDiv.appendChild(sponsorScoreEdit);
 
         cosponsorScoreEdit.type = "number";
         cosponsorScoreEdit.className = "cosponsorScoreEditor";
         cosponsorScoreEdit.value = mapping.cosponsorScore;
         cosponsorScoreEdit.placeholder = "positive number";
-        // todo: figure out if this can be updated with blur without throwing
-        cosponsorScoreEdit.onblur = function() {
-            updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
-        }
         cosponsorScoreEdit.onkeydown = function(key) {
             if (key.key == "Enter") {
-                updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit);
+                updateMappingsAndDisplay();
             }
         }
-        scoreMappingsDiv.appendChild(cosponsorScoreEdit);
     });
 }
 
-function updateMapping(mapping, phraseEdit, sponsorScoreEdit, cosponsorScoreEdit) {
-    mapping.phrase = phraseEdit.value;
-    mapping.sponsorScore = parseInt(sponsorScoreEdit.value);
-    mapping.cosponsorScore = parseInt(cosponsorScoreEdit.value);
+function updateMappings() {
+    var scoreMappingContainers = document.getElementsByClassName("scoreMappingContainer");
+    for (var i = 0; i < scoreMappingContainers.length; i++) {
+        var uiMapping = scoreMappingContainers[i];
+        var mapping = globalState.scoreMappings[i];
+
+        mapping.phrase = uiMapping.getElementsByClassName("phraseEditor")[0].value;
+        if (mapping.phrase == null) {
+            mapping.phrase = "";
+        }
+        mapping.sponsorScore = parseInt(uiMapping.getElementsByClassName("sponsorScoreEditor")[0].value);
+        if (mapping.sponsorScore == null) {
+            mapping.sponsorScore = 1;
+        }
+        mapping.cosponsorScore = parseInt(uiMapping.getElementsByClassName("cosponsorScoreEditor")[0].value);
+        if (mapping.cosponsorScore == null) {
+            mapping.cosponsorScore = 1;
+        }
+    }
+}
+
+function updateMappingsAndDisplay() {
+    updateMappings();
     displayScoreMappings();
     calculateAndDisplayScores();
     displayTeams();
