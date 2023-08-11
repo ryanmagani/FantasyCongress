@@ -1,11 +1,11 @@
-html, body, .row {
-    height: 98vw;
-    width: 98vw;
+.row {
+    display: flex;
  }
 
  .column {
     resize: height;
-    height: 99vh;
+    min-height: 99vh;
+    height: auto\9;
     float: left;
     margin-bottom: 1vh;
     padding: 1vw;
