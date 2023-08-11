@@ -75,3 +75,13 @@ textarea {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+summary {
+    cursor: pointer;
+}
+
+details {
+    background: rgba(47, 49, 49, 0.099);
+    margin-bottom: 2rem;
+    padding: .5rem 1rem;
+}
