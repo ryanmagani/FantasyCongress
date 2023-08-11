@@ -18,7 +18,7 @@
 }
 
 #scoreMappingColumn {
-    width: 11vw;
+    width: 16vw;
 }
 
 img {
@@ -77,4 +77,9 @@ details {
     background: rgba(47, 49, 49, 0.099);
     margin-bottom: 2rem;
     padding: .5rem 1rem;
+}
+
+label {
+    display: inline-block;
+    margin-top: 2vh;
 }
