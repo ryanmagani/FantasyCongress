@@ -26,6 +26,7 @@ img {
 }
 
 textarea {
+    resize: vertical;
     display: block;
     width: 98%;
     min-height: 20vh;
